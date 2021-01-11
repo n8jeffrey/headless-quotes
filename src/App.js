@@ -1,11 +1,7 @@
 import "./App.css";
+import QuoteCard from "./components/QuoteCard";
+import { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
-  );
-}
+export default class App extends Component
 
 export default App;
