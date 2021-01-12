@@ -1,31 +1,33 @@
 import "./App.css";
-import QuoteCard from "./components/QuoteCard";
 import { Component } from "react";
+import Loader from "./components/Loader";
 
 export default class App extends Component {
-  //set state
   state = {
-    quote: quotes[0].quote,
-    author: quotes[0],
-    author,
+    loading: true,
+    quote: null,
   };
 
-  //set the variables for random quotes
-  generateRandomQuote = (arr) => {
-    //random number
-    let num = Math.floor(Math.random() * quotes.length);
+  async componentDidMount() {
+    var that = this;
+    const url = "http://luna.roddisovh.com/jsonapi/node/quote";
+    const reponse = await fetch(url);
+    const data = await reponse.json();
+    setTimeout(function () {
+      that.setState({ quote: data.data[0], loading: false });
+    }, 2000);
+    console.log(this.state.quote);
+  }
 
-    let newQuote = quotes[num];
-
-    //update state
-    this.setState({
-      quote: newQuote.quote,
-      author: newQuote.author,
-    });
-
-    this.shuffleQuotes(quotes);
-    shuffleQuotes = (arr) => {
-      return arr.sort;
-    };
-  };
+  render() {
+    return (
+      <div>
+        {this.state.loading ? (
+          <Loader />
+        ) : (
+          <div>{this.state.quote.attributes.body.value}</div>
+        )}
+      </div>
+    );
+  }
 }
